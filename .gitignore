@@ -1,0 +1,17 @@
+# Dependencies
+node_modules
+
+# Env files — contain DB credentials, JWT secret, Cloudinary/Razorpay/email secrets
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor / OS
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
