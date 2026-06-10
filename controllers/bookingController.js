@@ -36,17 +36,7 @@ exports.createBooking = async (req, res) => {
 
     const booking = await Booking.create({ playerId: req.user._id, courtId, slotIds, totalAmount, notes });
 
-    // ── TESTING BYPASS: payment skipped ───────────────────────────────────────
-    // NOTE: Commented out to test non-payment features. Once tested, remove this
-    // block, restore the 'reserved' line below, and re-enable PaymentModal in
-    // client/src/pages/CourtDetail.jsx.
-    booking.status = 'confirmed';
-    await booking.save();
-    await Slot.updateMany({ _id: { $in: slotIds } }, { status: 'booked' });
-    // ── END TESTING BYPASS ────────────────────────────────────────────────────
-
-    // PAYMENT FLOW — uncomment when ready to test payments:
-    // await Slot.updateMany({ _id: { $in: slotIds } }, { status: 'reserved' });
+    await Slot.updateMany({ _id: { $in: slotIds } }, { status: 'reserved' });
 
     res.status(201).json({ bookingId: booking._id, amount: totalAmount });
   } catch (err) {
